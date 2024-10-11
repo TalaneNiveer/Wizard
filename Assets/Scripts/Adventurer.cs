@@ -1,13 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Adventurer : MonoBehaviour
 {
     private Vector3 targetPosition;
 
+    private Inventory inventory;
+
     void Start()
     {
         // Set initial position to align with the grid
         targetPosition = transform.position;
+        inventory = new Inventory(10);
+        // Create a new item
+        Item sword = new Item("Sword", "A sharp blade", 10);
+
+        // Add the item to the adventurer's inventory
+        AddItemToInventory(sword);
     }
 
     public void TakeTurn()
@@ -28,4 +37,29 @@ public class Adventurer : MonoBehaviour
         // Move adventurer to the target position
         transform.position = targetPosition;
     }
+
+    public void AddItemToInventory(Item item)
+    {
+        bool added = inventory.AddItem(item);
+        if (added)
+        {
+            Debug.Log("Item added to inventory: " + item.Name);
+        }
+        else
+        {
+            Debug.Log("Item full, could not add: " + item.Name);
+        }
+    }
+
+    public void DropLoot(GridSquare gridSquare)
+    {
+        List<Item> itemsToDrop = inventory.GetItems();
+        foreach (Item item in itemsToDrop)
+        {
+            gridSquare.AddItemToGrid(item);
+        }
+        inventory.ClearInventory(); // Clear the adventurer's inventory after dropping items
+    }
+
+
 }

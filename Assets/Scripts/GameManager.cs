@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     // List to store all the creatures
     public List<GameObject> creatures = new List<GameObject>();
 
-    public List<GameObject> adventurers = new List<GameObject>();
+    public List<Adventurer> adventurers = new List<Adventurer>();
 
     // Prefabs for room, creature (Rat), and adventurer
     public GameObject roomPrefab;
@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Debug.Log("GameManager Initialized");
+
+        SpawnAdventurer();
+
     }
 
     void Update()
@@ -50,7 +53,7 @@ public class GameManager : MonoBehaviour
 
     void ProcessTurn()
     {
-        foreach (GameObject adventurer in adventurers)
+        foreach (Adventurer adventurer in adventurers)
         {
             // Make each adventurer take a turn
             adventurer.GetComponent<Adventurer>().TakeTurn();
@@ -86,8 +89,9 @@ public class GameManager : MonoBehaviour
     public void SpawnAdventurer()
     {
         Vector3 spawnPos = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), 0);
-        GameObject newAdventurer = Instantiate(adventurerPrefab, spawnPos, Quaternion.identity);
-        adventurers.Add(newAdventurer);
+        GameObject adventurerObject = Instantiate(adventurerPrefab, spawnPos, Quaternion.identity);
+        Adventurer adventurer = adventurerObject.GetComponent<Adventurer>();
+        adventurers.Add(adventurer);
     }
 
 }
