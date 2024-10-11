@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
     // Method to spawn an adventurer
     public void SpawnAdventurer()
     {
-        Vector3 spawnPos = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), 0);
+        Vector3 spawnPos = new Vector3(Random.Range(1, 59), Random.Range(1, 29), 0);
         GameObject adventurerObject = Instantiate(adventurerPrefab, spawnPos, Quaternion.identity);
         Adventurer adventurer = adventurerObject.GetComponent<Adventurer>();
         adventurers.Add(adventurer);
